@@ -34,7 +34,6 @@ const refs = {
 
 refs.btnStart.setAttribute('disabled', true);
 let userDate = null;
-// let timerId = null;
 
 const options = {
   enableTime: true,
@@ -46,13 +45,12 @@ const options = {
       ? toastr.error('Please choose a date in the future')
       : refs.btnStart.removeAttribute('disabled');
     userDate = selectedDates[0];
-    console.log(userDate);
+    // console.log(userDate);
   },
 };
 
 flatpickr(refs.input, options);
 
-//в параметри Timer добавити результат флетріку(юзерДате)
 class Timer {
   constructor({ onTick, userDate }) {
     this.timerId = null;
@@ -63,17 +61,11 @@ class Timer {
     if (this.isActive) {
       return;
     }
-    // console.log(userDate);
-    //замість Date.now() * 1.0000002 поставити userDate
-
-    const startTime = userDate;
-    //const startTime = Date.now() * 1.0000002;
-
     this.isActive = true;
 
     this.timerId = setInterval(() => {
       const currentTime = Date.now();
-      const deltaTime = startTime - currentTime;
+      const deltaTime = userDate - currentTime;
       if (deltaTime <= 0) {
         return;
       }
@@ -84,6 +76,10 @@ class Timer {
 
       console.log(`${days}::${hours}::${minutes}::${seconds}`);
     }, 1000);
+  }
+  stop() {
+    clearInterval(this.timerId);
+    this.isActive = false;
   }
 
   convertMs(ms) {
@@ -114,8 +110,6 @@ class Timer {
 const timer = new Timer({
   onTick: updateClockFace,
 });
-
-timer.start();
 
 function updateClockFace({ days, hours, minutes, seconds }) {
   refs.days.textContent = `${days}`;
