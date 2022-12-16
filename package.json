@@ -20,6 +20,7 @@
   "dependencies": {
     "flatpickr": "^4.6.13",
     "modern-normalize": "^1.1.0",
+    "notiflix": "^3.2.5",
     "toastr": "^2.1.4"
   },
   "devDependencies": {

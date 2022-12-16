@@ -46,6 +46,7 @@ const options = {
       ? toastr.error('Please choose a date in the future')
       : refs.btnStart.removeAttribute('disabled');
     userDate = selectedDates[0];
+    console.log(userDate);
   },
 };
 
@@ -62,9 +63,12 @@ class Timer {
     if (this.isActive) {
       return;
     }
-    console.log(userDate);
+    // console.log(userDate);
     //замість Date.now() * 1.0000002 поставити userDate
-    const startTime = Date.now() * 1.0000002;
+
+    const startTime = userDate;
+    //const startTime = Date.now() * 1.0000002;
+
     this.isActive = true;
 
     this.timerId = setInterval(() => {
