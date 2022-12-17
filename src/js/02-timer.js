@@ -58,10 +58,13 @@ class Timer {
     this.onTick = onTick;
   }
   start() {
-    if (this.isActive) {
-      return;
-    }
-    this.isActive = true;
+    // if (this.isActive) {
+    //   return;
+    // }
+    // this.isActive = true;
+
+    refs.btnStart.setAttribute('disabled', true);
+    refs.input.setAttribute('disabled', true);
 
     this.timerId = setInterval(() => {
       const currentTime = Date.now();
@@ -70,16 +73,16 @@ class Timer {
         return;
       }
 
-      const { days, hours, minutes, seconds } = this.convertMs(deltaTime);
+      const data = this.convertMs(deltaTime);
 
-      this.onTick({ days, hours, minutes, seconds });
-
-      console.log(`${days}::${hours}::${minutes}::${seconds}`);
+      this.onTick(data);
+      // console.log(data);
     }, 1000);
   }
   stop() {
     clearInterval(this.timerId);
-    this.isActive = false;
+    // this.isActive = false;
+    refs.input.removeAttribute('disabled');
   }
 
   convertMs(ms) {
@@ -88,22 +91,26 @@ class Timer {
     const hour = minute * 60;
     const day = hour * 24;
 
-    const days = this.addLeadingZero(Math.floor(ms / day), 3);
-    const hours = this.addLeadingZero(Math.floor((ms % day) / hour), 2);
+    const days = this.addLeadingZero(Math.floor(ms / day));
+    const hours = this.addLeadingZero(Math.floor((ms % day) / hour));
     const minutes = this.addLeadingZero(
-      Math.floor(((ms % day) % hour) / minute),
-      2
+      Math.floor(((ms % day) % hour) / minute)
     );
     const seconds = this.addLeadingZero(
-      Math.floor((((ms % day) % hour) % minute) / second),
-      2
+      Math.floor((((ms % day) % hour) % minute) / second)
     );
+
+    //   const days = this.Math.floor(ms / day);
+    //   const hours = this.Math.floor((ms % day) / hour);
+    //   const minutes = this.Math.floor(((ms % day) % hour) / minute);
+    //   const seconds = this.Math.floor((((ms % day) % hour) % minute) / second);
 
     return { days, hours, minutes, seconds };
   }
 
-  addLeadingZero(value, num) {
-    return String(value).padStart(num, '0');
+  addLeadingZero(value) {
+    // return String(value).padStart(2, '0');
+    return String(value).padStart(2, '0');
   }
 }
 
@@ -117,5 +124,12 @@ function updateClockFace({ days, hours, minutes, seconds }) {
   refs.minutes.textContent = `${minutes}`;
   refs.seconds.textContent = `${seconds}`;
 }
+
+// function updateClockFace({ days, hours, minutes, seconds }) {
+//   refs.days.textContent = addLeadingZero(`${days}`);
+//   refs.hours.textContent = addLeadingZero(`${hours}`);
+//   refs.minutes.textContent = addLeadingZero(`${minutes}`);
+//   refs.seconds.textContent = addLeadingZero(`${seconds}`);
+// }
 
 refs.btnStart.addEventListener('click', timer.start.bind(timer));
