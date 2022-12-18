@@ -91,44 +91,48 @@ class Timer {
     const hour = minute * 60;
     const day = hour * 24;
 
-    const days = this.addLeadingZero(Math.floor(ms / day));
-    const hours = this.addLeadingZero(Math.floor((ms % day) / hour));
-    const minutes = this.addLeadingZero(
-      Math.floor(((ms % day) % hour) / minute)
-    );
-    const seconds = this.addLeadingZero(
-      Math.floor((((ms % day) % hour) % minute) / second)
-    );
+    // const days = this.addLeadingZero(Math.floor(ms / day));
+    // const hours = this.addLeadingZero(Math.floor((ms % day) / hour));
+    // const minutes = this.addLeadingZero(
+    //   Math.floor(((ms % day) % hour) / minute)
+    // );
+    // const seconds = this.addLeadingZero(
+    //   Math.floor((((ms % day) % hour) % minute) / second)
+    // );
 
-    //   const days = this.Math.floor(ms / day);
-    //   const hours = this.Math.floor((ms % day) / hour);
-    //   const minutes = this.Math.floor(((ms % day) % hour) / minute);
-    //   const seconds = this.Math.floor((((ms % day) % hour) % minute) / second);
+    const days = this.Math.floor(ms / day);
+    const hours = this.Math.floor((ms % day) / hour);
+    const minutes = this.Math.floor(((ms % day) % hour) / minute);
+    const seconds = this.Math.floor((((ms % day) % hour) % minute) / second);
 
     return { days, hours, minutes, seconds };
   }
 
-  addLeadingZero(value) {
-    return String(value).padStart(2, '0');
-  }
+  //   addLeadingZero(value) {
+  //     return String(value).padStart(2, '0');
+  //   }
 }
 
 const timer = new Timer({
   onTick: updateClockFace,
 });
 
-function updateClockFace({ days, hours, minutes, seconds }) {
-  refs.days.textContent = `${days}`;
-  refs.hours.textContent = `${hours}`;
-  refs.minutes.textContent = `${minutes}`;
-  refs.seconds.textContent = `${seconds}`;
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
 }
 
 // function updateClockFace({ days, hours, minutes, seconds }) {
-//   refs.days.textContent = addLeadingZero(`${days}`);
-//   refs.hours.textContent = addLeadingZero(`${hours}`);
-//   refs.minutes.textContent = addLeadingZero(`${minutes}`);
-//   refs.seconds.textContent = addLeadingZero(`${seconds}`);
+//   refs.days.textContent = `${days}`;
+//   refs.hours.textContent = `${hours}`;
+//   refs.minutes.textContent = `${minutes}`;
+//   refs.seconds.textContent = `${seconds}`;
 // }
+
+function updateClockFace({ days, hours, minutes, seconds }) {
+  refs.days.textContent = addLeadingZero(`${days}`);
+  refs.hours.textContent = addLeadingZero(`${hours}`);
+  refs.minutes.textContent = addLeadingZero(`${minutes}`);
+  refs.seconds.textContent = addLeadingZero(`${seconds}`);
+}
 
 refs.btnStart.addEventListener('click', timer.start.bind(timer));
