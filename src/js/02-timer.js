@@ -100,10 +100,10 @@ class Timer {
     //   Math.floor((((ms % day) % hour) % minute) / second)
     // );
 
-    const days = this.Math.floor(ms / day);
-    const hours = this.Math.floor((ms % day) / hour);
-    const minutes = this.Math.floor(((ms % day) % hour) / minute);
-    const seconds = this.Math.floor((((ms % day) % hour) % minute) / second);
+    const days = Math.floor(ms / day);
+    const hours = Math.floor((ms % day) / hour);
+    const minutes = Math.floor(((ms % day) % hour) / minute);
+    const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
     return { days, hours, minutes, seconds };
   }
